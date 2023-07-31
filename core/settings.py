@@ -88,11 +88,11 @@ WSGI_APPLICATION = "core.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "Inventory-System",
+        "NAME": "railway",
         "USER": "postgres",
-        "PASSWORD": "1682005",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
+        "PASSWORD": "z7N2nLqvK5JH13OFgqUe",
+        "HOST": "containers-us-west-176.railway.app",
+        "PORT": "7235",
     }
 }
 
