@@ -26,7 +26,7 @@ class LoginView(TokenObtainPairView):
 
             return Response(
                 {"access": access, "refresh": refresh, "user": user},
-                status=status.HTTP_400_BAD_REQUEST,
+                status=status.HTTP_200_OK,
             )
         except Exception as e:
             return Response(
