@@ -18,7 +18,6 @@ from rest_framework.decorators import api_view, permission_classes, parser_class
 @parser_classes([FormParser, MultiPartParser])
 def create_medicine(request):
     data = request.data
-    print(data)
 
     if not data:
         return Response(

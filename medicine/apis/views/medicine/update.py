@@ -3,9 +3,10 @@ from medicine.models import Medicine, Category
 
 # DRF stuff
 from rest_framework.response import Response
+from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework import status
 from rest_framework import permissions
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, parser_classes
 
 
 @api_view(
@@ -14,6 +15,7 @@ from rest_framework.decorators import api_view, permission_classes
     ]
 )
 @permission_classes([permissions.IsAdminUser])
+@parser_classes([FormParser, MultiPartParser])
 def update_medicine(request, medicine_id):
     data = request.data
 
