@@ -25,7 +25,7 @@ def check_medicine(request):
         )
 
     disease = data.get("disease")
-    medicine = data.get("medicine_id")
+    medicine = data.get("medicineId")
 
     if not disease:
         return Response(
