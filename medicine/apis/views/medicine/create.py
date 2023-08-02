@@ -15,6 +15,7 @@ from rest_framework.decorators import api_view, permission_classes, parser_class
     ]
 )
 @permission_classes([permissions.IsAdminUser])
+@parser_classes([FormParser, MultiPartParser])
 def create_medicine(request):
     data = request.data
 
