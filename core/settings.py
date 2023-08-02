@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "inventory-apis.up.railway.app",
+    "localhost",
     "https://inventory-apis.up.railway.app/",
 ]
 

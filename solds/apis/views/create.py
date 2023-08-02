@@ -50,6 +50,7 @@ def create_sale(request):
             disease=disease_instance,
         )
         total_price = 0
+        total_quantities = 0
         for medicine in medicines:
             item = Medicine.objects.get(pk=medicine["id"])
             if medicine["quantity"] > item.stock:
@@ -64,10 +65,13 @@ def create_sale(request):
                 sold=sold,
             )
             item.stock -= int(medicine["quantity"])
+            item.solds_count += 1
             item.save()
             total_price += item.price * int(medicine["quantity"])
+            total_quantities += int(medicine["quantity"])
 
         sold.total = total_price
+        sold.quantities = total_quantities
         sold.save()
         return Response({"message": "تم انشاء مبيعة بنجاح"}, status=status.HTTP_200_OK)
     except Exception:
