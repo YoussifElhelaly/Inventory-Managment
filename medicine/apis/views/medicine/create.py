@@ -3,9 +3,10 @@ from medicine.models import Medicine, Category
 
 # DRF stuff
 from rest_framework.response import Response
+from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework import status
 from rest_framework import permissions
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, parser_classes
 
 
 @api_view(
@@ -68,12 +69,6 @@ def create_medicine(request):
     if not exp_date:
         return Response(
             {"message": "من فضلك ادخل ناريخ انتهاء صالحية الدواء او المنتج"},
-            status=status.HTTP_400_BAD_REQUEST,
-        )
-
-    if not medicine_img:
-        return Response(
-            {"message": "من فضلك ادخل صورة الدواء او المنتج"},
             status=status.HTTP_400_BAD_REQUEST,
         )
 
