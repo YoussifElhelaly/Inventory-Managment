@@ -126,6 +126,6 @@ def create_medicine(request):
     except Exception as e:
         print(e)
         return Response(
-            {"message": "حدث خطأ اثناء انشاء الدواء الرجاء المحاولة مرة اخري"},
+            {"message": f"حدث خطأ اثناء انشاء الدواء الرجاء المحاولة مرة اخري {e}"},
             status=status.HTTP_400_BAD_REQUEST,
         )

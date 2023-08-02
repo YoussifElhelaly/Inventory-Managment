@@ -74,8 +74,8 @@ def create_sale(request):
         sold.quantities = total_quantities
         sold.save()
         return Response({"message": "تم انشاء مبيعة بنجاح"}, status=status.HTTP_200_OK)
-    except Exception as e:
+    except Exception:
         return Response(
-            {"message": f"حدث خطأ اثناء انشاء المبيعة...حاول مرة اخري {e}"},
+            {"message": f"حدث خطأ اثناء انشاء المبيعة...حاول مرة اخري"},
             status=status.HTTP_400_BAD_REQUEST,
         )
