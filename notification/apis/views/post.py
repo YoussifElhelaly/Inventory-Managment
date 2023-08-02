@@ -10,11 +10,7 @@ from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
 
 
-@api_view(
-    [
-        "GET",
-    ]
-)
+@api_view(["POST", "PUT"])
 @permission_classes([permissions.IsAdminUser])
 def see_notification(request, notification_id):
     try:
