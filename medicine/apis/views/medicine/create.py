@@ -72,6 +72,8 @@ def create_medicine(request):
             status=status.HTTP_400_BAD_REQUEST,
         )
 
+    print(medicine_img)
+
     if not medicine_img:
         return Response(
             {"message": "من فضلك ادخل صورة الدواء او المنتج"},
