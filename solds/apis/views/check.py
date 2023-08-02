@@ -54,7 +54,7 @@ def check_medicine(request):
         )
 
     try:
-        if banlist.medicine_set.contains(medicine_instance):
+        if banlist.medicine.contains(medicine_instance):
             return Response(
                 {"message": "هذا الدواء خطر علي المريض"},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -62,7 +62,8 @@ def check_medicine(request):
         return Response(
             {"message": "هذا الدواء مسموح به للمريض"}, status=status.HTTP_200_OK
         )
-    except Exception:
+    except Exception as e:
+        print(e)
         return Response(
             {
                 "message": "حدث خطأ اثناء فحص المنتج في قائمة المحظورات الرجاء المحاولة مرة اخري"
