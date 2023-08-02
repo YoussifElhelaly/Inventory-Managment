@@ -103,6 +103,14 @@ def create_medicine(request):
             status=status.HTTP_400_BAD_REQUEST,
         )
 
+    is_barcode_exists = Medicine.objects.filter(bar_code=bar_code).exists()
+
+    if is_barcode_exists:
+        return Response(
+            {"message": "يوجد بالفعل دواء بهذا الباركود"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
     try:
         Medicine.objects.create(
             name=name,
