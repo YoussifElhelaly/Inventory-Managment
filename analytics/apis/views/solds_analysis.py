@@ -32,7 +32,7 @@ return percentage
         "GET",
     ]
 )
-@permission_classes([permissions.AllowAny])
+@permission_classes([permissions.IsAdminUser])
 def monthly_sales_analysis(request):
     try:
         sales = Sold.objects.filter(sold_at__month=now.month)
@@ -63,7 +63,7 @@ def monthly_sales_analysis(request):
         "GET",
     ]
 )
-@permission_classes([permissions.AllowAny])
+@permission_classes([permissions.IsAdminUser])
 def monthly_sales(request):
     try:
         sales_count = Sold.objects.filter(sold_at__month=now.month).count()
@@ -89,7 +89,7 @@ def monthly_sales(request):
         "GET",
     ]
 )
-@permission_classes([permissions.AllowAny])
+@permission_classes([permissions.IsAdminUser])
 def weekly_sales_analysis(request):
     try:
         sales = Sold.objects.filter(sold_at__range=[start_week, end_week])
@@ -113,7 +113,7 @@ def weekly_sales_analysis(request):
         "GET",
     ]
 )
-@permission_classes([permissions.AllowAny])
+@permission_classes([permissions.IsAdminUser])
 def weekly_sales(request):
     try:
         sales_count = Sold.objects.filter(sold_at__range=[start_week, end_week]).count()

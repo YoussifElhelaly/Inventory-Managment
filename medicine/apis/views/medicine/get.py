@@ -35,6 +35,47 @@ def get_medicines(request):
     ]
 )
 @permission_classes([permissions.IsAdminUser])
+def get_best_seller_medicines(request):
+    try:
+        medicines = Medicine.objects.all().order_by("-solds_count")
+        serializer = MedicineSerializer(medicines, many=True).data
+        return Response({"data": serializer}, status=status.HTTP_200_OK)
+    except Exception:
+        return Response(
+            {
+                "message": "حدث خطأ اثناء جلب الادوية والمنتجات من قواعد البيانات...حاول مرة اخري"
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+
+@api_view(
+    [
+        "GET",
+    ]
+)
+@permission_classes([permissions.IsAdminUser])
+def get_expire_soon_medicines(request):
+    try:
+        medicines = Medicine.objects.all().order_by("exp_date")
+        serializer = MedicineSerializer(medicines, many=True).data
+        return Response({"data": serializer}, status=status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        return Response(
+            {
+                "message": "حدث خطأ اثناء جلب الادوية والمنتجات من قواعد البيانات...حاول مرة اخري"
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+
+@api_view(
+    [
+        "GET",
+    ]
+)
+@permission_classes([permissions.IsAdminUser])
 def get_medicine(request, medicine_id):
     try:
         medicine = Medicine.objects.get(pk=medicine_id)
