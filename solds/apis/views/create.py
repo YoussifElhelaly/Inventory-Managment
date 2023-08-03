@@ -52,13 +52,19 @@ def create_sale(request):
         total_price = 0
         total_quantities = 0
         for medicine in medicines:
-            item = Medicine.objects.get(pk=medicine["id"])
+            try:
+                item = Medicine.objects.get(pk=medicine["id"])
+            except Medicine.DoesNotExist:
+                return Response(
+                    {"message": "هذا الدواء غير موجود"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
             if medicine["quantity"] > item.stock:
                 return Response(
                     {"message": "المخزون الحالي اقل من الكمية المراد بيعها"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
-            SoldItem.objects.create(
+            sold_item = SoldItem.objects.create(
                 medicine=item,
                 quantity=int(medicine["quantity"]),
                 pharmacist=user,
@@ -67,7 +73,7 @@ def create_sale(request):
             item.stock -= int(medicine["quantity"])
             item.solds_count += 1
             item.save()
-            total_price += item.price * int(medicine["quantity"])
+            total_price += sold_item.total
             total_quantities += int(medicine["quantity"])
 
         sold.total = total_price
