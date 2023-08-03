@@ -24,7 +24,7 @@ def create_sale(request):
     medicines = data.get("medicines")
     disease = data.get("disease")
 
-    if not medicines or len(medicines) == 0:
+    if not medicines or len(list(medicines)) < 1:
         return Response(
             {"message": "الرجاء ادخال الادوية المراد بيعها"},
             status=status.HTTP_400_BAD_REQUEST,
