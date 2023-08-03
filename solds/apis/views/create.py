@@ -56,7 +56,7 @@ def create_sale(request):
                 item = Medicine.objects.get(pk=medicine["id"])
             except Medicine.DoesNotExist:
                 return Response(
-                    {"message": "هذا الدواء غير موجود"},
+                    {"message": f"الدواء ذو الباركود {medicine['bar_code']} ليس مُسجل"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             if medicine["quantity"] > item.stock:
