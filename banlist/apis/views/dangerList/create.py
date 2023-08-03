@@ -1,6 +1,6 @@
 # Internal stuff
-from banlist.models import Banlist
-from medicine.models import Medicine
+from banlist.models import Banlist, DangerList
+from medicine.models import Medicine, Category
 from disease.models import Disease
 
 # DRF stuff
@@ -12,7 +12,7 @@ from rest_framework.decorators import api_view, permission_classes
 
 @api_view(["POST"])
 @permission_classes([permissions.IsAdminUser])
-def create_banlist(request):
+def create_dangerlist(request):
     data = request.data
 
     if not data:
@@ -20,30 +20,22 @@ def create_banlist(request):
             {"message": "من فضلك ادخل البيانات"}, status=status.HTTP_400_BAD_REQUEST
         )
 
-    disease = data.get("disease")
+    category = data.get("category")
     medicines = data.get("medicines")
 
-    if not disease:
+    if not category:
         return Response(
-            {"message": "يجب ادخال المرض"}, status=status.HTTP_400_BAD_REQUEST
+            {"message": "يجب ادخال الفئة"}, status=status.HTTP_400_BAD_REQUEST
         )
 
     try:
-        disease_instance = Disease.objects.get(name=disease)
-    except Disease.DoesNotExist:
+        category_instance = Category.objects.get(name=category)
+    except Category.DoesNotExist:
         return Response(
-            {"message": "لم يتم العثور علي المرض"}, status=status.HTTP_404_NOT_FOUND
+            {"message": "لم يتم العثور علي الفئة"}, status=status.HTTP_404_NOT_FOUND
         )
 
-    is_banlist_exists = Banlist.objects.filter(disease=disease_instance).exists()
-
-    if is_banlist_exists:
-        return Response(
-            {"message": "يوجد بالفعل قائمة حظر لهذا المرض"},
-            status=status.HTTP_400_BAD_REQUEST,
-        )
-
-    if not medicines or len(medicines) == 0:
+    if not medicines or len(list(medicines)) == 0:
         return Response(
             {"message": "من فضلك ادخل الادوية"}, status=status.HTTP_400_BAD_REQUEST
         )

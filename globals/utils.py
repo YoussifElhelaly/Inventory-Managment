@@ -25,6 +25,7 @@ def calculate_profits(sales, sales_count):
         profits = 0
 
     for sale in sales:
+        print(sale.total)
         profits += sale.total
 
     return profits
