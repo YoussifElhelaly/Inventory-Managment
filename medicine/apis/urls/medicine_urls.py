@@ -22,6 +22,9 @@ urlpatterns = [
     path(
         "get/expire-soon/", get_expire_soon_medicines, name="get_expire_soon_medicines"
     ),
+    path(
+        "get/best-seller/", get_best_seller_medicines, name="get_best_seller_medicines"
+    ),
     path("update/<int:medicine_id>/", update_medicine, name="update_medicine"),
     path("delete/<int:medicine_id>/", delete_medicine, name="delete_medicine"),
 ]

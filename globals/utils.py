@@ -19,13 +19,13 @@ start_week = now.today() - datetime.timedelta(now.weekday())
 end_week = start_week + datetime.timedelta(7)
 
 
-def calculate_profits(objects, objects_count):
+def calculate_profits(sales, sales_count):
     profits = 0
-    if objects_count == 0:
+    if sales_count == 0:
         profits = 0
 
-    for object in objects:
-        profits += object.total
+    for sale in sales:
+        profits += sale.total
 
     return profits
 

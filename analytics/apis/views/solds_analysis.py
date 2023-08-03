@@ -114,6 +114,30 @@ def weekly_sales_analysis(request):
     ]
 )
 @permission_classes([permissions.IsAdminUser])
+def daily_sales_analysis(request):
+    try:
+        sales = Sold.objects.filter(sold_at__day=now.day)
+        sales_count = sales.count()
+        profits = calculate_profits(sales, sales_count)
+
+        return Response(
+            {"profits": profits},
+            status=status.HTTP_200_OK,
+        )
+    except Exception as e:
+        print(e)
+        return Response(
+            {"message": "حدث خطأ اثناء جلب الارباح اليومية"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+
+@api_view(
+    [
+        "GET",
+    ]
+)
+@permission_classes([permissions.IsAdminUser])
 def weekly_sales(request):
     try:
         sales_count = Sold.objects.filter(sold_at__range=[start_week, end_week]).count()

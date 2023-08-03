@@ -4,6 +4,7 @@ from analytics.apis.views.solds_analysis import (
     monthly_sales,
     weekly_sales_analysis,
     weekly_sales,
+    daily_sales_analysis,
 )
 
 urlpatterns = [
@@ -11,4 +12,5 @@ urlpatterns = [
     path("monthly-orders/", monthly_sales, name="monthly_sales"),
     path("weekly-sales/", weekly_sales_analysis, name="weekly_sales_analysis"),
     path("weekly-orders/", weekly_sales, name="weekly_sales"),
+    path("daily-sales/", daily_sales_analysis, name="daily_sales_analysis"),
 ]
