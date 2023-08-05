@@ -1,7 +1,6 @@
 # Internal stuff
-from banlist.models import Banlist
-from medicine.models import Medicine
-from disease.models import Disease
+from banlist.models import DangerList
+from medicine.models import Medicine, Category
 
 # DRF stuff
 from rest_framework.response import Response
@@ -12,18 +11,18 @@ from rest_framework.decorators import api_view, permission_classes
 
 @api_view(["PUT"])
 @permission_classes([permissions.IsAdminUser])
-def update_banlist(request, disease_id):
+def update_dangerlist(request, category_id):
     data = request.data
 
     try:
-        banlist = Banlist.objects.get(disease__pk=disease_id)
-    except Banlist.DoesNotExist:
+        dangerlist = DangerList.objects.get(category__pk=category_id)
+    except DangerList.DoesNotExist:
         return Response(
-            {"message": "لا يوجد قائمة حظر لهذا المرض"},
+            {"message": "لا يوجد قائمة حظر لهذه الفئة"},
             status=status.HTTP_404_NOT_FOUND,
         )
 
-    disease = data.get("disease")
+    category = data.get("category")
     medicines = data.get("medicines")
 
     try:
@@ -31,15 +30,15 @@ def update_banlist(request, disease_id):
         # to avoid multiple SQL updates without need
         is_sql_updated = False
 
-        if disease and disease != banlist.disease.name:
+        if category and category != dangerlist.category.name:
             try:
-                disease_instance = Disease.objects.get(name=disease)
-            except Disease.DoesNotExist:
+                category_instance = Category.objects.get(name=category)
+            except Category.DoesNotExist:
                 return Response(
-                    {"message": "لم يتم العثور علي المرض"},
+                    {"message": "لم يتم العثور علي الفئة"},
                     status=status.HTTP_404_NOT_FOUND,
                 )
-            banlist.disease = disease_instance
+            dangerlist.category = category_instance
             is_updated = True
             is_sql_updated = True
 
@@ -59,12 +58,12 @@ def update_banlist(request, disease_id):
 
                 medicines_instances.append(medicines_instance)
 
-            banlist.medicine.set(medicines_instances)
+            dangerlist.medicine.set(medicines_instances)
             is_updated = True
 
         if is_updated:
             if is_sql_updated:
-                banlist.save()
+                dangerlist.save()
             return Response(
                 {"message": "تم تحديث قائمة الحظر بنجاح"}, status=status.HTTP_200_OK
             )

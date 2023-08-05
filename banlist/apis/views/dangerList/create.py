@@ -1,7 +1,6 @@
 # Internal stuff
-from banlist.models import Banlist, DangerList
+from banlist.models import DangerList
 from medicine.models import Medicine, Category
-from disease.models import Disease
 
 # DRF stuff
 from rest_framework.response import Response
@@ -35,6 +34,16 @@ def create_dangerlist(request):
             {"message": "لم يتم العثور علي الفئة"}, status=status.HTTP_404_NOT_FOUND
         )
 
+    is_dangerlist_exists = DangerList.objects.filter(
+        category=category_instance
+    ).exists()
+
+    if is_dangerlist_exists:
+        return Response(
+            {"message": "يوجد بالفعل قائمة حظر لهذه الفئة"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
     if not medicines or len(list(medicines)) == 0:
         return Response(
             {"message": "من فضلك ادخل الادوية"}, status=status.HTTP_400_BAD_REQUEST
@@ -54,8 +63,8 @@ def create_dangerlist(request):
         medicines_instances.append(medicines_instance)
 
     try:
-        banlist = Banlist.objects.create(disease=disease_instance)
-        banlist.medicine.set(medicines_instances)
+        dangerlist = DangerList.objects.create(category=category_instance)
+        dangerlist.medicine.set(medicines_instances)
         return Response(
             {"message": "تم انشاء القائمة بنجاح"}, status=status.HTTP_200_OK
         )

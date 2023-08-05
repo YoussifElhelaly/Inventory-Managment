@@ -27,7 +27,8 @@ urlpatterns = [
     path("category/", include("medicine.apis.urls.categories_urls")),
     path("notification/", include("notification.apis.urls")),
     path("solds/", include("solds.apis.urls")),
-    path("banlist/", include("banlist.apis.urls")),
+    path("banlist/", include("banlist.apis.urls.banlist_urls")),
+    path("dangerlist/", include("banlist.apis.urls.dangerlist_urls")),
     path("analytics/", include("analytics.apis.urls")),
 ]
 

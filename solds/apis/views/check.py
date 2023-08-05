@@ -1,7 +1,7 @@
 # Internal stuff
 from solds.models import Sold, SoldItem
 from medicine.models import Medicine
-from banlist.models import Banlist
+from banlist.models import Banlist, DangerList
 
 # DRF stuff
 from rest_framework.response import Response
@@ -26,7 +26,6 @@ def check_medicine(request):
 
     disease = data.get("disease")
     medicine = data.get("medicineId")
-    print(medicine)
 
     if not disease:
         return Response(
@@ -36,10 +35,7 @@ def check_medicine(request):
     try:
         banlist = Banlist.objects.get(disease__name=disease)
     except Banlist.DoesNotExist:
-        return Response(
-            {"message": "لا يوجد لائحة حذر لهذا المرض"},
-            status=status.HTTP_404_NOT_FOUND,
-        )
+        pass
 
     if not medicine:
         return Response(
@@ -54,9 +50,31 @@ def check_medicine(request):
         )
 
     try:
-        if banlist.medicine.contains(medicine_instance):
+        danger_list = DangerList.objects.get(category=medicine_instance.category)
+    except DangerList.DoesNotExist:
+        pass
+
+    try:
+        is_banned = False
+        is_dangerous = False
+
+        if type(banlist) != None:
+            if banlist.medicine.contains(medicine_instance):
+                is_banned = True
+
+        if type(danger_list) != None:
+            if danger_list.medicine.contains(medicine_instance):
+                is_dangerous = True
+
+        if is_banned:
             return Response(
                 {"message": "هذا الدواء خطر علي المريض"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if is_dangerous:
+            return Response(
+                {"message": "هذا الدواء محظور بموجب لائحة طبية"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         return Response(
