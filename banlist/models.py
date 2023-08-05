@@ -13,4 +13,4 @@ class Banlist(models.Model):
 class DangerList(models.Model):
     category = models.OneToOneField(Category, on_delete=models.CASCADE)
     medicine = models.ManyToManyField(Medicine)
-    created_at = models.DateField(auto_created=True, blank=True, null=True)
+    created_at = models.DateField(auto_now_add=True, blank=True, null=True)

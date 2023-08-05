@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from banlist.models import Banlist, DangerList
-from medicine.apis.serializers import MedicineSerializer
+from medicine.apis.serializers import MedicineSerializer, CategorySerializer
 
 
 class BanlistSerializer(serializers.ModelSerializer):
@@ -13,6 +13,7 @@ class BanlistSerializer(serializers.ModelSerializer):
 
 class DangerListSerializer(serializers.ModelSerializer):
     medicine = MedicineSerializer(read_only=True, many=True)
+    category = CategorySerializer(read_only=True, many=False)
 
     class Meta:
         model = DangerList
