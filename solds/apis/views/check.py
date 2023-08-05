@@ -60,11 +60,11 @@ def check_medicine(request):
         is_banned = False
         is_dangerous = False
 
-        if type(banlist) != None:
+        if banlist != None:
             if banlist.medicine.contains(medicine_instance):
                 is_banned = True
 
-        if type(danger_list) != None:
+        if danger_list != None:
             if danger_list.medicine.contains(medicine_instance):
                 is_dangerous = True
 
