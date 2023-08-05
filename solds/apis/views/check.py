@@ -26,6 +26,8 @@ def check_medicine(request):
 
     disease = data.get("disease")
     medicine = data.get("medicineId")
+    danger_list = None
+    banlist = None
 
     if not disease:
         return Response(
