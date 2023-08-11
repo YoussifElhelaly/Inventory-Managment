@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "django_celery_results",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -193,5 +194,9 @@ CELERY_BROKER_URL = "redis://127.0.0.1:6379"
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_SERIALIZER = "json"
-CELERY_TIMEZONE = "Asia/Riyadh"
+CELERY_TIMEZONE = "Africa/Cairo"
+# Asia/Riyadh
 CELERY_RESULT_BACKEND = "django-db"
+
+# CELERY BEAT
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"

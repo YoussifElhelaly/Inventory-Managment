@@ -1,5 +1,5 @@
 # Internal stuff
-from solds.models import Sold, SoldItem
+from solds.tasks import add_count_sale_danger
 from medicine.models import Medicine
 from banlist.models import Banlist, DangerList
 
@@ -75,6 +75,7 @@ def check_medicine(request):
             )
 
         if is_dangerous:
+            add_count_sale_danger.delay()
             return Response(
                 {"message": "هذا الدواء محظور بموجب لائحة طبية"},
                 status=status.HTTP_400_BAD_REQUEST,

@@ -3,7 +3,6 @@ import os
 
 from celery import Celery
 from django.conf import settings
-import redis
 
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
@@ -11,7 +10,9 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 app = Celery("core")
 app.conf.enable_utc = False
 
-app.conf.update(timezone="Asia/Riyadh")
+
+app.conf.update(timezone="Africa/Cairo")
+# Asia/Riyadh
 app.config_from_object(settings, namespace="CELERY")
 
 app.autodiscover_tasks()

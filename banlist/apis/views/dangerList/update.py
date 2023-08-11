@@ -70,7 +70,8 @@ def update_dangerlist(request, category_id):
         return Response(
             {"message": "لا يوجد شئ لتحديثه"}, status=status.HTTP_400_BAD_REQUEST
         )
-    except Exception:
+    except Exception as e:
+        print(e)
         return Response(
             {"message": "حدثت مشكلة اثناء تحديث القائمة"},
             status=status.HTTP_400_BAD_REQUEST,
