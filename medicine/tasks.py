@@ -18,7 +18,8 @@ def check_medicines_stock():
         if medicine.stock <= medicine.stock_warn_limit:
             Notification.objects.create(
                 notification_type=NOTIFICATION_TYPES[0][0],
-                content=f"الدواء ذو الباركود: {medicine.bar_code} علي وشك النفاذ!",
+                content="المنتج علي وشك النفاذ من المخزون",
+                bar_code=int(medicine.bar_code),
             )
 
 
@@ -37,7 +38,8 @@ def check_medicines_expiration():
         if days_left < 3:
             Notification.objects.create(
                 notification_type=NOTIFICATION_TYPES[1][1],
-                content=f"الدواء ذو الباركود: {medicine.bar_code} علي وشك انتهاء الصلاحية!",
+                content="المنتج علي وشك انتهاء صلاحيته",
+                bar_code=int(medicine.bar_code),
             )
 
 
