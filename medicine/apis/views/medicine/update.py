@@ -103,7 +103,8 @@ def update_medicine(request, medicine_id):
             {"message": "لا يوجد شئ لتحديث"}, status=status.HTTP_400_BAD_REQUEST
         )
 
-    except Exception:
+    except Exception as e:
+        print(e)
         return Response(
             {"message": "حدث خطأ اثناء تحديث الدواء الرجاء المحاولة مرة اخري"},
             status=status.HTTP_400_BAD_REQUEST,
