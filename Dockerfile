@@ -1,1 +1,1 @@
-docker run --link some-redis:redis -e CELERY_BROKER_URL=redis://default:TOY3cisPpYL72oIx7UNW@containers-us-west-113.railway.app:8068 --rm celery celery status
+RUN celery -A core worker -l INFO -B
