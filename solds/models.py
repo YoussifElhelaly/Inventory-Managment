@@ -2,13 +2,16 @@ from django.db import models
 from disease.models import Disease
 from medicine.models import Medicine
 from users.models import User
-import random
+from django.utils import timezone
+from globals.utils import now
 
 # Create your models here.
 
+year_slice = slice(-1, -2)
+
 
 class Sold(models.Model):
-    sold_number = models.IntegerField(unique=True)
+    sold_number = models.BigIntegerField(unique=True)
     disease = models.ForeignKey(Disease, on_delete=models.CASCADE)
     total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     sold_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
@@ -16,15 +19,20 @@ class Sold(models.Model):
     pharmacist = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
-        number_list = [x for x in range(10)]
-        code_items = []
-
-        for i in range(5):
-            num = random.choice(number_list)
-            code_items.append(num)
-
-        code_string = "".join(str(item) for item in code_items)
-        self.sold_number = code_string
+        year = str(now.year)[-2:]
+        print("year:", year)
+        month = f"{now.month:02}"
+        print("month:", f"{month:02}")
+        day = f"{now.day:02}"
+        print("day:", day)
+        hour = f"{now.hour:02}"
+        print("hour:", hour)
+        min = f"{now.minute:02}"
+        print("min:", min)
+        sec = f"{now.second:02}"
+        print("sec:", sec)
+        sold_code = f"{year}{month}{day}{hour}{min}{sec}"
+        self.sold_number = sold_code
         super().save(*args, **kwargs)
 
 

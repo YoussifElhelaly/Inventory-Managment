@@ -191,7 +191,9 @@ SIMPLE_JWT = {
     "JTI_CLAIM": "jti",
 }
 
-CELERY_BROKER_URL = "redis://127.0.0.1:6379"
+CELERY_BROKER_URL = (
+    "redis://default:TOY3cisPpYL72oIx7UNW@containers-us-west-113.railway.app:8068"
+)
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_SERIALIZER = "json"
