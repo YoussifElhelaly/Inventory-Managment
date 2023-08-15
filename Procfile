@@ -1,1 +1,1 @@
-web: celery -A core worker --loglevel=info & python manage.py migrate && gunicorn core.wsgi --log-file -
+web: gunicorn core.wsgi --log-file -
