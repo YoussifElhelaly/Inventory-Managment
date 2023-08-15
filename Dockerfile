@@ -7,8 +7,11 @@ COPY requirements.txt .
 # Install the project dependencies
 RUN pip install -r requirements.txt
 
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+
 # Copy the rest of the project files to the container
 COPY . .
 
 # Run the Celery worker command
-CMD celery -A core worker -l INFO -B
+RUN celery -A core worker -l INFO -B
