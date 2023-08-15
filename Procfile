@@ -1,1 +1,1 @@
-web: celery -A core.celery --loglevel=info & celery -A core.celery beat -l info -S django & gunicorn core.wsgi --log-file -
+web: celery -A core.celery --loglevel=info & celery -A core.celery beat -l info -S django && gunicorn core.wsgi --log-file -
