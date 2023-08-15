@@ -12,6 +12,3 @@ ENV PYTHONUNBUFFERED=1
 
 # Copy the rest of the project files to the container
 COPY . .
-
-# Run the Celery worker command
-RUN celery -A core worker -l INFO -B
