@@ -14,4 +14,4 @@ ENV PYTHONUNBUFFERED=1
 COPY . .
 
 # Run the Celery worker command
-CMD celery -A core worker -l INFO -B
+RUN celery -A core worker -l INFO -B
