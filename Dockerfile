@@ -1,15 +1,12 @@
 # Use a Python base image
 FROM python:3.9
 
-# Copy the requirements file to the container
-COPY requirements.txt .
+WORKDIR /app
+
+# Copy the project files to the container
+COPY . .
 
 # Install the project dependencies
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Set environment variables
-ENV PYTHONUNBUFFERED=1
-
-# Copy the rest of the project files to the container
-COPY . .
-CMD ["celery", "-A", "core", "worker", "-l", "INFO", "-B"]
+CMD celery -A core worker -l INFO --pool=prefork --concurrency=8 & python manage.py migrate && gunicorn core.wsgi --log-file -
